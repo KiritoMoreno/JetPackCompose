@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -33,10 +35,52 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyColumn()
+                    MyRow()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun MyRow() {
+    /*
+    Row (Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween){
+        Text(
+            "Example 1"
+        )
+        Text(
+            "Example 2"
+        )
+        Text(
+            "Example 3"
+        )
+    }
+    */
+    //We can use Modifier.weight(1f) or another
+    Row(
+        Modifier
+            .fillMaxSize()
+            .horizontalScroll(rememberScrollState())
+    ) {
+        Text(
+            "Example 1", modifier = Modifier.width(100.dp)
+        )
+        Text(
+            "Example 2", modifier = Modifier.width(100.dp)
+        )
+        Text(
+            "Example 3", modifier = Modifier.width(100.dp)
+        )
+        Text(
+            "Example 4", modifier = Modifier.width(100.dp)
+        )
+        Text(
+            "Example 5", modifier = Modifier.width(100.dp)
+        )
+        Text(
+            "Example 6", modifier = Modifier.width(100.dp)
+        )
     }
 }
 
@@ -59,88 +103,18 @@ fun MyColumn() {
         Text(
             "Example 2",
             Modifier
-                .background(Color.Black)
+                .background(Color.Blue)
+                .height(100.dp)
                 .fillMaxSize()
         )
         Text(
-            "Example 2",
+            "Example 3",
             Modifier
-                .background(Color.Black)
+                .background(Color.Blue)
+                .height(100.dp)
                 .fillMaxSize()
         )
-        Text("Example 3",
-            Modifier
-                .background(Color.Red)
-                .height(100.dp)
-                .fillMaxSize())
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-        Text(
-            "Example 2",
-            Modifier
-                .background(Color.Black)
-                .fillMaxSize()
-        )
-        Text(
-            "Example 2",
-            Modifier
-                .background(Color.Black)
-                .fillMaxSize()
-        )
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
 
-        Text(
-            "Example 2",
-            Modifier
-                .background(Color.Black)
-                .fillMaxSize()
-        )
-        Text(
-            "Example 2",
-            Modifier
-                .background(Color.Black)
-                .fillMaxSize()
-        )
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
-
-        Text("Example 4",
-            Modifier
-                .background(Color.Yellow)
-                .height(100.dp)
-                .fillMaxSize())
 
     }
 }
@@ -164,6 +138,6 @@ fun MyBox(name: String) {
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyColumn()
+        MyRow()
     }
 }
