@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -35,13 +37,47 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyRow()
+                    MyComplexLayout()
                 }
             }
         }
     }
 }
 
+@Composable
+fun MyComplexLayout(){
+    Column (Modifier.fillMaxSize()){
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Color.Yellow)){
+
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)){
+            Box(modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .background(Color.Blue))
+            Box(modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .background(Color.Cyan), contentAlignment = Alignment.Center){
+                Text(text = "Hello Word!!")
+            }
+        }
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .background(Color.Red)){
+
+        }
+    }
+}
 @Composable
 fun MyRow() {
     /*
@@ -138,6 +174,6 @@ fun MyBox(name: String) {
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyRow()
+        MyComplexLayout()
     }
 }
