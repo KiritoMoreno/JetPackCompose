@@ -34,11 +34,12 @@ fun ConstraintExample(){
             start.linkTo(boxYellow.end)
         })
         Box(modifier = Modifier.size(125.dp).background(Color.Black).constrainAs(boxBlack){
-            bottom.linkTo(parent.bottom)
-            start.linkTo(parent.start)
+            top.linkTo(boxYellow.bottom)
+            start.linkTo(boxYellow.end)
         })
         Box(modifier = Modifier.size(125.dp).background(Color.Green).constrainAs(boxGreen){
-
+            bottom.linkTo(boxYellow.top)
+            end.linkTo(boxYellow.start)
         })
 
     }
