@@ -23,7 +23,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,16 +53,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyStateExample() {
 
-    var counter = rememberSaveable{ mutableStateOf(0)}
+    var counter by rememberSaveable{ mutableStateOf(0)}
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { counter.value += 1}) {
+        Button(onClick = { counter += 1}) {
             Text(text = "Click")
         }
-        Text(text = "I have been pressed ${counter.value} times")
+        Text(text = "I have been pressed $counter times")
     }
 }
 
