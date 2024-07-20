@@ -60,7 +60,6 @@ fun ConstraintExample(){
     }
 }
 
-@Preview
 @Composable
 fun ConstraintExampleGuide(){
     ConstraintLayout (Modifier.fillMaxSize()){
@@ -69,12 +68,41 @@ fun ConstraintExampleGuide(){
         val topGuide = createGuidelineFromTop(0.1f)
         val startGuide = createGuidelineFromStart(0.25f)
 
-        Box(modifier = Modifier.size(125.dp).background(Color.Red).constrainAs(boxRed){
-            top.linkTo(topGuide)
-            start.linkTo(startGuide)
+        Box(modifier = Modifier
+            .size(125.dp)
+            .background(Color.Red)
+            .constrainAs(boxRed) {
+                top.linkTo(topGuide)
+                start.linkTo(startGuide)
+            })
+
+
+
+    }
+}
+
+@Preview
+@Composable
+fun ConstraintBarrier(){
+    ConstraintLayout (Modifier.fillMaxSize()){
+
+        val (boxRed, boxBlue, boxYellow) = createRefs()
+
+        val barrier = createEndBarrier(boxBlue,boxRed)
+
+        Box (modifier = Modifier.size(125.dp).background(Color.Red).constrainAs(boxRed){
+            start.linkTo(parent.start, margin = 16.dp)
+
+        })
+        Box (modifier = Modifier.size(235.dp).background(Color.Blue).constrainAs(boxBlue){
+            top.linkTo(boxRed.bottom)
+            start.linkTo(boxRed.start, margin = 32.dp)
         })
 
-
+        // It will always respect the barrier ->
+        Box(modifier = Modifier.size(50.dp).background(Color.Yellow).constrainAs(boxYellow){
+            start.linkTo(barrier)
+        })
 
     }
 }
