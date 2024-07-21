@@ -29,6 +29,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
@@ -43,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyStateExample()
+                    MyText()
                 }
             }
         }
@@ -65,7 +69,6 @@ fun MyStateExample() {
         Text(text = "I have been pressed $counter times")
     }
 }
-
 
 @Composable
 fun MyComplexLayout() {
@@ -211,10 +214,28 @@ fun MyBox(name: String) {
     }
 }
 
+@Composable
+fun MyText(){
+    Column (Modifier.fillMaxSize()){
+        Text(text = "Example of the text")
+        Text(text = "Example of the text", color = Color.Blue)
+        Text(text = "Example of the text", style = TextStyle(fontWeight = FontWeight.ExtraBold))
+        Text(text = "Example of the text", fontWeight = FontWeight.Light)
+        Text(text = "Example of the text", fontFamily = FontFamily.Cursive)
+        Text(text = "Example of the text", style = TextStyle(textDecoration = TextDecoration.LineThrough))
+        Text(text = "Example of the text", textDecoration = TextDecoration.Underline)
+        Text(text = "Example of the text", textDecoration = TextDecoration.combine(listOf(
+            TextDecoration.LineThrough, TextDecoration.Underline)))
+        Text(text = "Example of the text", fontFamily = FontFamily.Cursive, textDecoration = TextDecoration.Underline)
+
+
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyStateExample()
+        MyText()
     }
 }
