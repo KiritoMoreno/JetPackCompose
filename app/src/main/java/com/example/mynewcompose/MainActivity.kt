@@ -21,9 +21,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -47,7 +49,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyText()
+                    MyTextField()
                 }
             }
         }
@@ -232,10 +234,17 @@ fun MyText(){
     }
 }
 
+@Composable
+fun MyTextField(){
+
+    var myText by remember { mutableStateOf("")}
+    TextField(value = myText, onValueChange = {myText = it})
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyText()
+        MyTextField()
     }
 }
