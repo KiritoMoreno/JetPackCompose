@@ -14,14 +14,18 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -49,7 +53,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyTextFieldAdvance()
+                    Column {
+                        MyTextFieldOutLined()
+                    }
                 }
             }
         }
@@ -270,10 +276,24 @@ fun MyTextField() {
     TextField(value = myText, onValueChange = { myText = it })
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyTextFieldOutLined(){
+    var myText by remember { mutableStateOf("")}
+    OutlinedTextField(value = myText, onValueChange = {myText = it}, modifier = Modifier.padding(24.dp), label = { Text(
+        text = "Fill this"
+    )}, colors = TextFieldDefaults.outlinedTextFieldColors(
+        focusedTextColor = Color.Black,
+        focusedBorderColor = Color.Red,
+        unfocusedTextColor = Color.Blue,
+        unfocusedBorderColor = Color.Red
+    ))
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyTextFieldAdvance()
+        MyTextFieldOutLined()
     }
 }
