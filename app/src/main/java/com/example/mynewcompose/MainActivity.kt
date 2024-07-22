@@ -30,8 +30,10 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -69,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyCircularImage()
+                    MyProgress()
                 }
             }
         }
@@ -125,6 +127,7 @@ fun MyImage() {
         alpha = 0.5f
     )
 }
+
 @Composable
 fun MyCircularImage() {
     Image(
@@ -137,8 +140,26 @@ fun MyCircularImage() {
 }
 
 @Composable
-fun MyIcon(){
+fun MyIcon() {
     Icon(imageVector = Icons.Rounded.Star, contentDescription = "Icon", tint = Color.Red)
+}
+
+@Composable
+fun MyProgress() {
+    Column(
+        Modifier
+            .padding(24.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(color = Color.Red, strokeWidth = 5.dp)
+        LinearProgressIndicator(
+            modifier = Modifier.padding(top = 32.dp),
+            color = Color.Blue,
+            trackColor = Color.Red
+        )
+    }
 }
 
 
@@ -146,6 +167,6 @@ fun MyIcon(){
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyCircularImage()
+        MyProgress()
     }
 }
