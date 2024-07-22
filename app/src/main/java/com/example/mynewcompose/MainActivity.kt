@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyTextField()
+                    MyTextFieldAdvance()
                 }
             }
         }
@@ -59,13 +59,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyStateExample() {
 
-    var counter by rememberSaveable{ mutableStateOf(0)}
+    var counter by rememberSaveable { mutableStateOf(0) }
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { counter += 1}) {
+        Button(onClick = { counter += 1 }) {
             Text(text = "Click")
         }
         Text(text = "I have been pressed $counter times")
@@ -217,34 +217,63 @@ fun MyBox(name: String) {
 }
 
 @Composable
-fun MyText(){
-    Column (Modifier.fillMaxSize()){
+fun MyText() {
+    Column(Modifier.fillMaxSize()) {
         Text(text = "Example of the text")
         Text(text = "Example of the text", color = Color.Blue)
         Text(text = "Example of the text", style = TextStyle(fontWeight = FontWeight.ExtraBold))
         Text(text = "Example of the text", fontWeight = FontWeight.Light)
         Text(text = "Example of the text", fontFamily = FontFamily.Cursive)
-        Text(text = "Example of the text", style = TextStyle(textDecoration = TextDecoration.LineThrough))
+        Text(
+            text = "Example of the text",
+            style = TextStyle(textDecoration = TextDecoration.LineThrough)
+        )
         Text(text = "Example of the text", textDecoration = TextDecoration.Underline)
-        Text(text = "Example of the text", textDecoration = TextDecoration.combine(listOf(
-            TextDecoration.LineThrough, TextDecoration.Underline)))
-        Text(text = "Example of the text", fontFamily = FontFamily.Cursive, textDecoration = TextDecoration.Underline)
+        Text(
+            text = "Example of the text", textDecoration = TextDecoration.combine(
+                listOf(
+                    TextDecoration.LineThrough, TextDecoration.Underline
+                )
+            )
+        )
+        Text(
+            text = "Example of the text",
+            fontFamily = FontFamily.Cursive,
+            textDecoration = TextDecoration.Underline
+        )
 
 
     }
 }
 
 @Composable
-fun MyTextField(){
+fun MyTextFieldAdvance() {
+    var myText by remember { mutableStateOf("") }
 
-    var myText by remember { mutableStateOf("")}
-    TextField(value = myText, onValueChange = {myText = it})
+    TextField(
+        value = myText,
+        onValueChange = {
+            if (it.contains("a")) {
+                it.replace("a", "")
+            } else {
+                it
+            }
+        },
+        label = { Text(text = "Which is your name?") }) // it will work like hint
+}
+
+@Composable
+fun MyTextField() {
+
+    var myText by remember { mutableStateOf("") }
+
+    TextField(value = myText, onValueChange = { myText = it })
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyTextField()
+        MyTextFieldAdvance()
     }
 }
