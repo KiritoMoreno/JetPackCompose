@@ -1,8 +1,11 @@
 package com.example.mynewcompose
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +22,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -53,8 +58,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var myText by remember { mutableStateOf("")}
-                    MyTextFieldUsingState(myText){myText = it}
+                    MyButtonExample()
                 }
             }
         }
@@ -62,51 +66,30 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyTextFieldAdvance() {
-    var myText by remember { mutableStateOf("") }
+fun MyButtonExample() {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(24.dp)
+    ) {
+        Button(
+            onClick = { Log.i("Moreno", "This is an Example") },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color.Blue,
+                contentColor = Color.Red
+            ), border = BorderStroke(5.dp, Color.Yellow)
+        ) {
 
-    TextField(
-        value = myText,
-        onValueChange = {
-            if (it.contains("a")) {
-                it.replace("a", "")
-            } else {
-                it
-            }
-        },
-        label = { Text(text = "Which is your name?") }) // it will work like hint
+            Text(text = "Hello")
+        }
+    }
 }
 
-@Composable
-fun MyTextField() {
 
-    var myText by remember { mutableStateOf("") }
-
-    TextField(value = myText, onValueChange = { myText = it })
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTextFieldOutLined(){
-    var myText by remember { mutableStateOf("")}
-    OutlinedTextField(value = myText, onValueChange = {myText = it}, modifier = Modifier.padding(24.dp), label = { Text(
-        text = "Fill this"
-    )}, colors = TextFieldDefaults.outlinedTextFieldColors(
-        focusedTextColor = Color.Black,
-        focusedBorderColor = Color.Red,
-        unfocusedTextColor = Color.Blue,
-        unfocusedBorderColor = Color.Red
-    ))
-}
-
-@Composable
-fun MyTextFieldUsingState(name: String, onValueChanged:(String) -> Unit){
-    TextField(value = name, onValueChange = {onValueChanged(it)})
-}
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyTextFieldUsingState()
+        MyButtonExample()
     }
 }
