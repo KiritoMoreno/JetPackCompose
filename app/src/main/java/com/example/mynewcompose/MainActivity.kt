@@ -67,13 +67,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyButtonExample() {
+    var enabled by rememberSaveable {
+        mutableStateOf(true)
+    }
     Column(
         Modifier
             .fillMaxSize()
             .padding(24.dp)
     ) {
         Button(
-            onClick = { Log.i("Moreno", "This is an Example") },
+            onClick = { enabled = false},
+            enabled = enabled,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Blue,
                 contentColor = Color.White
@@ -84,6 +88,7 @@ fun MyButtonExample() {
         }
     }
 }
+
 
 
 @Preview(showBackground = true)
