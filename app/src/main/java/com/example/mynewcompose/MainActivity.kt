@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -42,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -62,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyImage()
+                    MyCircularImage()
                 }
             }
         }
@@ -118,11 +122,19 @@ fun MyImage() {
         alpha = 0.5f
     )
 }
+@Composable
+fun MyCircularImage() {
+    Image(
+        painter = painterResource(id = R.drawable.ic_launcher_background),
+        contentDescription = "Example",
+        modifier = Modifier.clip(CircleShape).border(5.dp, Color.Red, CircleShape)  // we can use RoundedCornerShape(25f)
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyImage()
+        MyCircularImage()
     }
 }
