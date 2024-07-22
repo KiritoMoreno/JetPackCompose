@@ -25,10 +25,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -127,9 +130,17 @@ fun MyCircularImage() {
     Image(
         painter = painterResource(id = R.drawable.ic_launcher_background),
         contentDescription = "Example",
-        modifier = Modifier.clip(CircleShape).border(5.dp, Color.Red, CircleShape)  // we can use RoundedCornerShape(25f)
+        modifier = Modifier
+            .clip(CircleShape)
+            .border(5.dp, Color.Red, CircleShape)  // we can use RoundedCornerShape(25f)
     )
 }
+
+@Composable
+fun MyIcon(){
+    Icon(imageVector = Icons.Rounded.Star, contentDescription = "Icon", tint = Color.Red)
+}
+
 
 @Preview(showBackground = true)
 @Composable
