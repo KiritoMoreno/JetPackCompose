@@ -53,202 +53,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column {
-                        MyTextFieldOutLined()
-                    }
+                    var myText by remember { mutableStateOf("")}
+                    MyTextFieldUsingState(myText){myText = it}
                 }
             }
         }
-    }
-}
-
-@Composable
-fun MyStateExample() {
-
-    var counter by rememberSaveable { mutableStateOf(0) }
-    Column(
-        Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Button(onClick = { counter += 1 }) {
-            Text(text = "Click")
-        }
-        Text(text = "I have been pressed $counter times")
-    }
-}
-
-@Composable
-fun MyComplexLayout() {
-    Column(Modifier.fillMaxSize()) {
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(Color.Yellow), contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Hello Word!!")
-        }
-        MySpacer(20)
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .background(Color.Blue), contentAlignment = Alignment.Center
-            ) {
-                Text(text = "We Making an exercise")
-            }
-            Spacer(modifier = Modifier.weight(0.1f))
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .background(Color.Cyan), contentAlignment = Alignment.Center
-            ) {
-                Text(text = "In Compose")
-            }
-        }
-        MySpacer(20)
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .weight(1f)
-                .background(Color.Red), contentAlignment = Alignment.BottomCenter
-        ) {
-            Text(text = "Congratulations!! =)")
-        }
-    }
-}
-
-@Composable
-fun MySpacer(size: Int) {
-    Spacer(modifier = Modifier.height(size.dp))
-}
-
-@Composable
-fun MyRow() {
-    /*
-    Row (Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween){
-        Text(
-            "Example 1"
-        )
-        Text(
-            "Example 2"
-        )
-        Text(
-            "Example 3"
-        )
-    }
-    */
-    //We can use Modifier.weight(1f) or another
-    Row(
-        Modifier
-            .fillMaxSize()
-            .horizontalScroll(rememberScrollState())
-    ) {
-        Text(
-            "Example 1", modifier = Modifier.width(100.dp)
-        )
-        Text(
-            "Example 2", modifier = Modifier.width(100.dp)
-        )
-        Text(
-            "Example 3", modifier = Modifier.width(100.dp)
-        )
-        Text(
-            "Example 4", modifier = Modifier.width(100.dp)
-        )
-        Text(
-            "Example 5", modifier = Modifier.width(100.dp)
-        )
-        Text(
-            "Example 6", modifier = Modifier.width(100.dp)
-        )
-    }
-}
-
-@Composable
-fun MyColumn() {
-// at column it will be like LinearLayout
-    // verticalArrangement = Arrangement.SpaceBetween
-    Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            "Example 1",
-            Modifier
-                .background(Color.Blue)
-                .height(100.dp)
-                .fillMaxSize()
-        )// we can use weight(1f)
-        Text(
-            "Example 2",
-            Modifier
-                .background(Color.Blue)
-                .height(100.dp)
-                .fillMaxSize()
-        )
-        Text(
-            "Example 3",
-            Modifier
-                .background(Color.Blue)
-                .height(100.dp)
-                .fillMaxSize()
-        )
-
-
-    }
-}
-
-@Composable
-fun MyBox(name: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(
-            modifier = Modifier
-                .width(200.dp)
-                .height(200.dp)
-                .background(androidx.compose.ui.graphics.Color.Blue)
-                .verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center
-        ) {
-            Text("Example to see the box")
-        }
-    }
-}
-
-@Composable
-fun MyText() {
-    Column(Modifier.fillMaxSize()) {
-        Text(text = "Example of the text")
-        Text(text = "Example of the text", color = Color.Blue)
-        Text(text = "Example of the text", style = TextStyle(fontWeight = FontWeight.ExtraBold))
-        Text(text = "Example of the text", fontWeight = FontWeight.Light)
-        Text(text = "Example of the text", fontFamily = FontFamily.Cursive)
-        Text(
-            text = "Example of the text",
-            style = TextStyle(textDecoration = TextDecoration.LineThrough)
-        )
-        Text(text = "Example of the text", textDecoration = TextDecoration.Underline)
-        Text(
-            text = "Example of the text", textDecoration = TextDecoration.combine(
-                listOf(
-                    TextDecoration.LineThrough, TextDecoration.Underline
-                )
-            )
-        )
-        Text(
-            text = "Example of the text",
-            fontFamily = FontFamily.Cursive,
-            textDecoration = TextDecoration.Underline
-        )
-
-
     }
 }
 
@@ -290,10 +99,14 @@ fun MyTextFieldOutLined(){
     ))
 }
 
+@Composable
+fun MyTextFieldUsingState(name: String, onValueChanged:(String) -> Unit){
+    TextField(value = name, onValueChange = {onValueChanged(it)})
+}
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyTextFieldOutLined()
+        MyTextFieldUsingState()
     }
 }
