@@ -75,8 +75,8 @@ fun MyButtonExample() {
         Button(
             onClick = { Log.i("Moreno", "This is an Example") },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Blue,
-                contentColor = Color.Red
+                containerColor = Color.Blue,
+                contentColor = Color.White
             ), border = BorderStroke(5.dp, Color.Yellow)
         ) {
 
