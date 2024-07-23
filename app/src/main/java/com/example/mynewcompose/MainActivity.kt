@@ -146,6 +146,9 @@ fun MyIcon() {
 
 @Composable
 fun MyProgress() {
+    var showLoading by rememberSaveable {
+        mutableStateOf(false)
+    }
     Column(
         Modifier
             .padding(24.dp)
@@ -153,12 +156,17 @@ fun MyProgress() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularProgressIndicator(color = Color.Red, strokeWidth = 5.dp)
-        LinearProgressIndicator(
-            modifier = Modifier.padding(top = 32.dp),
-            color = Color.Blue,
-            trackColor = Color.Red
-        )
+        if(showLoading){
+            CircularProgressIndicator(color = Color.Red, strokeWidth = 5.dp)
+            LinearProgressIndicator(
+                modifier = Modifier.padding(top = 32.dp),
+                color = Color.Blue,
+                trackColor = Color.Red
+            )
+        }
+        Button(onClick = {showLoading = !showLoading}) {
+            Text(text = "Loading View")
+        }
     }
 }
 
