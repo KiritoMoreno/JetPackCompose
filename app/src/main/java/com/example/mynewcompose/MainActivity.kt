@@ -38,6 +38,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -71,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyProgressAdvance()
+                    MySwitch()
                 }
             }
         }
@@ -182,11 +184,11 @@ fun MyProgressAdvance() {
     ) {
         CircularProgressIndicator(progress = progressStatus)
 
-        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center ){
-            Button(onClick = {progressStatus += 0.1f}) {
+        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center) {
+            Button(onClick = { progressStatus += 0.1f }) {
                 Text(text = "+")
             }
-            Button(onClick = {progressStatus -= 0.1f}) {
+            Button(onClick = { progressStatus -= 0.1f }) {
                 Text(text = "-")
             }
         }
@@ -194,11 +196,35 @@ fun MyProgressAdvance() {
     }
 }
 
+@Composable
+fun MySwitch() {
+    var stateSwitch by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    Switch(
+        checked = stateSwitch,
+        onCheckedChange = { stateSwitch = !stateSwitch },
+        enabled = false ,
+        colors = SwitchDefaults.colors(
+            uncheckedThumbColor = Color.Red,
+            uncheckedTrackColor = Color.Magenta,
+            checkedThumbColor = Color.Green,
+            checkedTrackColor = Color.Cyan,
+            disabledCheckedTrackColor = Color.Yellow,
+            disabledCheckedThumbColor = Color.Yellow,
+            disabledUncheckedThumbColor = Color.Yellow,
+            disabledUncheckedTrackColor = Color.Yellow
+        )
+    )
+
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyProgressAdvance()
+        MySwitch()
     }
 }
