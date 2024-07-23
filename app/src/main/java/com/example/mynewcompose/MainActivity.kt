@@ -77,17 +77,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var status by rememberSaveable {
-                        mutableStateOf(false)
-                    }
-                    val checkInfo = CheckInfo(
-                        title = "Example Completed",
-                        selected = status,
-                        onCheckedChange = { status = it })
+                    val myOptions = getOptions(listOf("Moreno","Example","Hello"))
                     Column {
-                        MyCheckBoxText()
-                        MyCheckBoxTextCompleted(checkInfo)
-
+                        myOptions.forEach { MyCheckBoxTextCompleted(it) }
                     }
                 }
             }
@@ -95,6 +87,21 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun getOptions(titles: List<String>): List<CheckInfo> {
+
+    // iterate through all the content and return it.
+    return titles.map {
+        var status by rememberSaveable {
+            mutableStateOf(false)
+        }
+        CheckInfo(
+            title = it,
+            selected = status,
+            onCheckedChange = { myNewStatus -> status = myNewStatus })
+    }
+
+}
 
 @Composable
 fun MySwitch() {
@@ -159,15 +166,16 @@ fun MyCheckBoxText() {
 
 
 @Composable
-fun MyCheckBoxTextCompleted(checkInfo:CheckInfo) {
+fun MyCheckBoxTextCompleted(checkInfo: CheckInfo) {
 
 
     Row(
         Modifier
-            .fillMaxSize()
             .padding(8.dp), verticalAlignment = Alignment.CenterVertically
     ) {
-        Checkbox(checked = checkInfo.selected, onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
+        Checkbox(
+            checked = checkInfo.selected,
+            onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = checkInfo.title)
     }
