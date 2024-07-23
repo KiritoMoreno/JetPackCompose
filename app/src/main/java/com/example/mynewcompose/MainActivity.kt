@@ -64,6 +64,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mynewcompose.ui.theme.CheckInfo
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -76,128 +77,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyCheckBoxText()
+                    var status by rememberSaveable {
+                        mutableStateOf(false)
+                    }
+                    val checkInfo = CheckInfo(
+                        title = "Example Completed",
+                        selected = status,
+                        onCheckedChange = { status = it })
+                    Column {
+                        MyCheckBoxText()
+                        MyCheckBoxTextCompleted(checkInfo)
+
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun MyButtonExample() {
-    var enabled by rememberSaveable {
-        mutableStateOf(true)
-    }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(24.dp)
-    ) {
-        Button(
-            onClick = { enabled = false },
-            enabled = enabled,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Blue,
-                contentColor = Color.White
-            ), border = BorderStroke(5.dp, Color.Yellow)
-        ) {
-
-            Text(text = "Hello")
-        }
-        OutlinedButton(
-            onClick = { enabled = false },
-            enabled = enabled,
-            modifier = Modifier.padding(top = 8.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
-                contentColor = Color.Black,
-                disabledContainerColor = Color.Black,
-                disabledContentColor = Color.Red
-            )
-        ) {
-            Text(text = "Hello")
-        }
-        TextButton(onClick = {}) {
-            Text(text = "Hello")
-            // The button will not have boarders.
-        }
-    }
-}
-
-@Composable
-fun MyImage() {
-    Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
-        contentDescription = "Example",
-        alpha = 0.5f
-    )
-}
-
-@Composable
-fun MyCircularImage() {
-    Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
-        contentDescription = "Example",
-        modifier = Modifier
-            .clip(CircleShape)
-            .border(5.dp, Color.Red, CircleShape)  // we can use RoundedCornerShape(25f)
-    )
-}
-
-@Composable
-fun MyIcon() {
-    Icon(imageVector = Icons.Rounded.Star, contentDescription = "Icon", tint = Color.Red)
-}
-
-@Composable
-fun MyProgress() {
-    var showLoading by rememberSaveable {
-        mutableStateOf(false)
-    }
-    Column(
-        Modifier
-            .padding(24.dp)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (showLoading) {
-            CircularProgressIndicator(color = Color.Red, strokeWidth = 5.dp)
-            LinearProgressIndicator(
-                modifier = Modifier.padding(top = 32.dp),
-                color = Color.Blue,
-                trackColor = Color.Red
-            )
-        }
-        Button(onClick = { showLoading = !showLoading }) {
-            Text(text = "Loading View")
-        }
-    }
-}
-
-@Composable
-fun MyProgressAdvance() {
-    var progressStatus by rememberSaveable {
-        mutableStateOf(0f)
-    }
-    Column(
-        Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator(progress = progressStatus)
-
-        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center) {
-            Button(onClick = { progressStatus += 0.1f }) {
-                Text(text = "+")
-            }
-            Button(onClick = { progressStatus -= 0.1f }) {
-                Text(text = "-")
-            }
-        }
-
-    }
-}
 
 @Composable
 fun MySwitch() {
@@ -208,7 +105,7 @@ fun MySwitch() {
     Switch(
         checked = stateSwitch,
         onCheckedChange = { stateSwitch = !stateSwitch },
-        enabled = false ,
+        enabled = false,
         colors = SwitchDefaults.colors(
             uncheckedThumbColor = Color.Red,
             uncheckedTrackColor = Color.Magenta,
@@ -224,35 +121,60 @@ fun MySwitch() {
 }
 
 @Composable
-fun MyCheckBox(){
+fun MyCheckBox() {
     var state by rememberSaveable {
         mutableStateOf(false)
     }
 
-    Checkbox(checked = state, onCheckedChange = {state = !state}, enabled = true, colors =CheckboxDefaults.colors(
-        checkedColor = Color.Red,
-        uncheckedColor = Color.Black,
-        checkmarkColor = Color.Blue
-    ))
+    Checkbox(
+        checked = state,
+        onCheckedChange = { state = !state },
+        enabled = true,
+        colors = CheckboxDefaults.colors(
+            checkedColor = Color.Red,
+            uncheckedColor = Color.Black,
+            checkmarkColor = Color.Blue
+        )
+    )
 }
 
 @Composable
-fun MyCheckBoxText(){
+fun MyCheckBoxText() {
 
     var state by rememberSaveable {
         mutableStateOf(false)
     }
-    Row (
+    Row(
         Modifier
             .fillMaxSize()
-            .padding(8.dp), verticalAlignment = Alignment.CenterVertically){
-        Checkbox(checked = state, onCheckedChange = {state = !state})
+            .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(checked = state, onCheckedChange = { state = !state })
         Spacer(modifier = Modifier.width(8.dp))
         Text(text = "Example 1")
     }
 
 
 }
+
+
+@Composable
+fun MyCheckBoxTextCompleted(checkInfo:CheckInfo) {
+
+
+    Row(
+        Modifier
+            .fillMaxSize()
+            .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(checked = checkInfo.selected, onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = checkInfo.title)
+    }
+
+
+}
+
 
 @Preview(showBackground = true)
 @Composable
