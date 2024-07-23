@@ -41,6 +41,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -83,8 +85,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val myOptions = getOptions(listOf("Moreno","Example","Hello"))
                     Column {
-                        MyTriStatusCheckBox()
-                        myOptions.forEach { MyCheckBoxTextCompleted(it) }
+                        MyRadioButton()
                     }
                 }
             }
@@ -204,10 +205,27 @@ fun MyTriStatusCheckBox(){
 
 }
 
+
+@Composable
+fun MyRadioButton(){
+
+    Row {
+        RadioButton(selected = false, onClick = { /*TODO*/ },enabled= true, colors = RadioButtonDefaults.colors(
+            selectedColor = Color.Red,
+            unselectedColor = Color.Black,
+            disabledSelectedColor = Color.Green
+        ))
+        Text(text = "Example 1")
+    }
+
+
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyCheckBoxText()
+        MyRadioButton()
     }
 }
