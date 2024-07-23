@@ -83,9 +83,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val myOptions = getOptions(listOf("Moreno","Example","Hello"))
+                    var selected by remember{ mutableStateOf("Moreno")}
+
                     Column {
-                        MyRadioButtonList()
+
+                        MyRadioButtonList(selected){selected = it}
                     }
                 }
             }
@@ -223,24 +225,23 @@ fun MyRadioButton(){
 }
 
 @Composable
-fun MyRadioButtonList(){
-    var selected by remember{ mutableStateOf("Moreno")}
+fun MyRadioButtonList(name:String,onItemSelected:(String)->Unit){
 
     Column (Modifier.fillMaxSize()){
         Row {
-            RadioButton(selected = selected == "Moreno", onClick = { selected = "Moreno" })
+            RadioButton(selected = name == "Moreno", onClick = { onItemSelected("Moreno")})
             Text(text = "Moreno")
         }
         Row {
-            RadioButton(selected = selected == "David", onClick = { selected = "David" })
+            RadioButton(selected = name == "David", onClick = { onItemSelected("David")})
             Text(text = "David")
         }
         Row {
-            RadioButton(selected = selected == "Juliet", onClick = { selected = "Juliet"})
+            RadioButton(selected = name == "Juliet", onClick = { onItemSelected("Juliet")})
             Text(text = "Juliet")
         }
         Row {
-            RadioButton(selected = selected == "Pao", onClick = {selected = "Pao" })
+            RadioButton(selected = name == "Pao", onClick = { onItemSelected("Pao") })
             Text(text = "Pao")
         }
     }
@@ -251,6 +252,6 @@ fun MyRadioButtonList(){
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyRadioButtonList()
+        MyRadioButton()
     }
 }
