@@ -32,6 +32,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,6 +48,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -58,6 +60,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.state.ToggleableState.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -79,6 +83,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val myOptions = getOptions(listOf("Moreno","Example","Hello"))
                     Column {
+                        MyTriStatusCheckBox()
                         myOptions.forEach { MyCheckBoxTextCompleted(it) }
                     }
                 }
@@ -183,6 +188,21 @@ fun MyCheckBoxTextCompleted(checkInfo: CheckInfo) {
 
 }
 
+@Composable
+fun MyTriStatusCheckBox(){
+    var status by rememberSaveable {
+        mutableStateOf(Off)
+    }
+
+    TriStateCheckbox(state = status, onClick = {
+        status = when(status){
+            On -> Off
+            Off -> Indeterminate
+            Indeterminate -> On
+        }
+    })
+
+}
 
 @Preview(showBackground = true)
 @Composable
