@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyCheckBox()
+                    MyCheckBoxText()
                 }
             }
         }
@@ -236,11 +236,28 @@ fun MyCheckBox(){
     ))
 }
 
+@Composable
+fun MyCheckBoxText(){
+
+    var state by rememberSaveable {
+        mutableStateOf(false)
+    }
+    Row (
+        Modifier
+            .fillMaxSize()
+            .padding(8.dp), verticalAlignment = Alignment.CenterVertically){
+        Checkbox(checked = state, onCheckedChange = {state = !state})
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = "Example 1")
+    }
+
+
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyCheckBox()
+        MyCheckBoxText()
     }
 }
