@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MyProgress()
+                    MyProgressAdvance()
                 }
             }
         }
@@ -156,7 +156,7 @@ fun MyProgress() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if(showLoading){
+        if (showLoading) {
             CircularProgressIndicator(color = Color.Red, strokeWidth = 5.dp)
             LinearProgressIndicator(
                 modifier = Modifier.padding(top = 32.dp),
@@ -164,9 +164,33 @@ fun MyProgress() {
                 trackColor = Color.Red
             )
         }
-        Button(onClick = {showLoading = !showLoading}) {
+        Button(onClick = { showLoading = !showLoading }) {
             Text(text = "Loading View")
         }
+    }
+}
+
+@Composable
+fun MyProgressAdvance() {
+    var progressStatus by rememberSaveable {
+        mutableStateOf(0f)
+    }
+    Column(
+        Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(progress = progressStatus)
+
+        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center ){
+            Button(onClick = {progressStatus += 0.1f}) {
+                Text(text = "+")
+            }
+            Button(onClick = {progressStatus -= 0.1f}) {
+                Text(text = "-")
+            }
+        }
+
     }
 }
 
@@ -175,6 +199,6 @@ fun MyProgress() {
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyProgress()
+        MyProgressAdvance()
     }
 }
