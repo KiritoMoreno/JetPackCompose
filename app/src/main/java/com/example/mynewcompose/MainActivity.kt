@@ -27,7 +27,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -87,7 +90,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     Column {
-                        MyCard()
+                        MyBadgeBox()
                     }
                 }
             }
@@ -116,11 +119,28 @@ fun MyCard() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyBadgeBox() {
+    Column(Modifier.padding(16.dp)) {
+        BadgedBox(badge = {
+            Badge(containerColor = Color.Blue, contentColor = Color.Green) {
+                Text(
+                    text = "100"
+                )
+            }
+        }) {
+            Icon(imageVector = Icons.Default.Star, contentDescription = "Star")
+        }
+    }
+
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyCard()
+        MyBadgeBox()
     }
 }
