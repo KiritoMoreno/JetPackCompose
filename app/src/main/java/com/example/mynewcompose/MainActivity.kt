@@ -31,6 +31,8 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
@@ -83,11 +85,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var selected by remember{ mutableStateOf("Moreno")}
 
                     Column {
-
-                        MyRadioButtonList(selected){selected = it}
+                        MyCard()
                     }
                 }
             }
@@ -96,162 +96,31 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun getOptions(titles: List<String>): List<CheckInfo> {
-
-    // iterate through all the content and return it.
-    return titles.map {
-        var status by rememberSaveable {
-            mutableStateOf(false)
-        }
-        CheckInfo(
-            title = it,
-            selected = status,
-            onCheckedChange = { myNewStatus -> status = myNewStatus })
-    }
-
-}
-
-@Composable
-fun MySwitch() {
-    var stateSwitch by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    Switch(
-        checked = stateSwitch,
-        onCheckedChange = { stateSwitch = !stateSwitch },
-        enabled = false,
-        colors = SwitchDefaults.colors(
-            uncheckedThumbColor = Color.Red,
-            uncheckedTrackColor = Color.Magenta,
-            checkedThumbColor = Color.Green,
-            checkedTrackColor = Color.Cyan,
-            disabledCheckedTrackColor = Color.Yellow,
-            disabledCheckedThumbColor = Color.Yellow,
-            disabledUncheckedThumbColor = Color.Yellow,
-            disabledUncheckedTrackColor = Color.Yellow
-        )
-    )
-
-}
-
-@Composable
-fun MyCheckBox() {
-    var state by rememberSaveable {
-        mutableStateOf(false)
-    }
-
-    Checkbox(
-        checked = state,
-        onCheckedChange = { state = !state },
-        enabled = true,
-        colors = CheckboxDefaults.colors(
-            checkedColor = Color.Red,
-            uncheckedColor = Color.Black,
-            checkmarkColor = Color.Blue
-        )
-    )
-}
-
-@Composable
-fun MyCheckBoxText() {
-
-    var state by rememberSaveable {
-        mutableStateOf(false)
-    }
-    Row(
-        Modifier
-            .fillMaxSize()
-            .padding(8.dp), verticalAlignment = Alignment.CenterVertically
+fun MyCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),  // Shadows
+        shape = MaterialTheme.shapes.small,
+        colors = CardDefaults.cardColors(containerColor = Color.Gray, contentColor = Color.Yellow),
+        border = BorderStroke(5.dp, Color.Black)
     ) {
-        Checkbox(checked = state, onCheckedChange = { state = !state })
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = "Example 1")
-    }
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "Example 1")
+            Text(text = "Example 2")
+            Text(text = "Example 3")
+            Text(text = "Example 4")
 
-
-}
-
-
-@Composable
-fun MyCheckBoxTextCompleted(checkInfo: CheckInfo) {
-
-
-    Row(
-        Modifier
-            .padding(8.dp), verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = checkInfo.selected,
-            onCheckedChange = { checkInfo.onCheckedChange(!checkInfo.selected) })
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = checkInfo.title)
-    }
-
-
-}
-
-@Composable
-fun MyTriStatusCheckBox(){
-    var status by rememberSaveable {
-        mutableStateOf(Off)
-    }
-
-    TriStateCheckbox(state = status, onClick = {
-        status = when(status){
-            On -> Off
-            Off -> Indeterminate
-            Indeterminate -> On
-        }
-    })
-
-}
-
-
-@Composable
-fun MyRadioButton(){
-
-    Row {
-        RadioButton(selected = false, onClick = { /*TODO*/ },enabled= true, colors = RadioButtonDefaults.colors(
-            selectedColor = Color.Red,
-            unselectedColor = Color.Black,
-            disabledSelectedColor = Color.Green
-        ))
-        Text(text = "Example 1")
-    }
-
-
-
-}
-
-@Composable
-fun MyRadioButtonList(name:String,onItemSelected:(String)->Unit){
-
-    Column (Modifier.fillMaxSize()){
-        Row {
-            RadioButton(selected = name == "Moreno", onClick = { onItemSelected("Moreno")})
-            Text(text = "Moreno")
-        }
-        Row {
-            RadioButton(selected = name == "David", onClick = { onItemSelected("David")})
-            Text(text = "David")
-        }
-        Row {
-            RadioButton(selected = name == "Juliet", onClick = { onItemSelected("Juliet")})
-            Text(text = "Juliet")
-        }
-        Row {
-            RadioButton(selected = name == "Pao", onClick = { onItemSelected("Pao") })
-            Text(text = "Pao")
         }
     }
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyRadioButton()
+        MyCard()
     }
 }
