@@ -40,6 +40,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -90,7 +91,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     Column {
-                        MyBadgeBox()
+                        MyDivider()
                     }
                 }
             }
@@ -136,11 +137,21 @@ fun MyBadgeBox() {
 
 }
 
+@Composable
+fun MyDivider() {
+    Divider(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        color = Color.Red,
+        thickness = 8.dp
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyNewComposeTheme {
-        MyBadgeBox()
+        MyDivider()
     }
 }
