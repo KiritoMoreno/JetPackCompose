@@ -93,7 +93,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     Column {
-                        MyBasicSlider()
+                        MyAdvanceSlider()
                     }
                 }
             }

@@ -84,12 +84,26 @@ import com.example.mynewcompose.ui.theme.CheckInfo
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 @Composable
-fun MyBasicSlider(){
+fun MyBasicSlider() {
     Column {
-        var sliderPosition by remember { mutableStateOf(0f)}
-        Slider(value = sliderPosition, onValueChange ={sliderPosition = it})
-        
+        var sliderPosition by remember { mutableStateOf(0f) }
+        Slider(value = sliderPosition, onValueChange = { sliderPosition = it })
+
     }
+}
 
-
+@Composable
+fun MyAdvanceSlider() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        var sliderPosition by remember { mutableStateOf(0f) }
+        var completeValue by remember{ mutableStateOf("")}
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            onValueChangeFinished = {completeValue = sliderPosition.toString()},
+            valueRange = 0f..10f,
+            steps = 9
+        )
+        Text(text = completeValue)
+    }
 }
