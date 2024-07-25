@@ -52,6 +52,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -82,114 +83,13 @@ import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MyNewComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    color = MaterialTheme.colorScheme.background
-                ) {
-
-                    Column {
-                        MyBasicSlider()
-                    }
-                }
-            }
-        }
-    }
-}
-
 @Composable
-fun MyCard() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),  // Shadows
-        shape = MaterialTheme.shapes.small,
-        colors = CardDefaults.cardColors(containerColor = Color.Gray, contentColor = Color.Yellow),
-        border = BorderStroke(5.dp, Color.Black)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Example 1")
-            Text(text = "Example 2")
-            Text(text = "Example 3")
-            Text(text = "Example 4")
-
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyBadgeBox() {
-    Column(Modifier.padding(16.dp)) {
-        BadgedBox(badge = {
-            Badge(containerColor = Color.Blue, contentColor = Color.Green) {
-                Text(
-                    text = "100"
-                )
-            }
-        }) {
-            Icon(imageVector = Icons.Default.Star, contentDescription = "Star")
-        }
+fun MyBasicSlider(){
+    Column {
+        var sliderPosition by remember { mutableStateOf(0f)}
+        Slider(value = sliderPosition, onValueChange ={sliderPosition = it})
+        
     }
 
-}
 
-@Composable
-fun MyDivider() {
-    Divider(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-        color = Color.Red,
-        thickness = 8.dp
-    )
-}
-
-@Composable
-fun MyDropDownMenu() {
-    var selectedText by remember {
-        mutableStateOf("")
-    }
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-    val desserts = listOf("","Bowl", "Coffee", "Apple", "Toast")
-
-    Column(modifier = Modifier.padding(20.dp)) {
-        OutlinedTextField(
-            value = selectedText,
-            onValueChange = { selectedText = it },
-            enabled = false,
-            readOnly = true,
-            modifier = Modifier
-                .clickable { expanded = true }
-                .fillMaxWidth()
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            desserts.forEach { dessert ->
-                DropdownMenuItem(text = { Text(text = dessert) }, onClick = {
-                    expanded = false
-                    selectedText = dessert
-                })
-            }
-        }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyNewComposeTheme {
-        MyDropDownMenu()
-    }
 }
