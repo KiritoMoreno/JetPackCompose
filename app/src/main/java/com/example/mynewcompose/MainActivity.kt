@@ -80,6 +80,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
+import com.example.mynewcompose.ui.theme.MyAlertDialog
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -91,9 +92,13 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    var show by remember{ mutableStateOf(false)}
 
-                    Column {
-                        MyAdvanceSlider()
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Button(onClick = {show = true }) {
+                            Text(text = "Show Dialog")
+                        }
+                        MyAlertDialog(show = show, onDismiss = {show = false}, onConfirm = {Log.i("Moreno", "Click")})
                     }
                 }
             }
