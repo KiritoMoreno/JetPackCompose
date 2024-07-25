@@ -82,6 +82,7 @@ import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
 import com.example.mynewcompose.ui.theme.MyAlertDialog
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
+import com.example.mynewcompose.ui.theme.MySimpleCustomDialog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +99,7 @@ class MainActivity : ComponentActivity() {
                         Button(onClick = {show = true }) {
                             Text(text = "Show Dialog")
                         }
-                        MyAlertDialog(show = show, onDismiss = {show = false}, onConfirm = {Log.i("Moreno", "Click")})
+                        MySimpleCustomDialog(show = show, onDismiss = {show = false})
                     }
                 }
             }
