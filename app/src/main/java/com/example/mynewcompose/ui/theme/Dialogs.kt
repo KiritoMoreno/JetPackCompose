@@ -127,36 +127,31 @@ fun AccountItem(email: String, @DrawableRes drawable: Int) {
         }
     }
 }
+
 @Composable
 fun MyConfirmationDialog(show: Boolean, onDismiss: () -> Unit) {
+
     if (show) {
+
         Dialog(onDismissRequest = { onDismiss() }) {
+
             Column(
+
                 Modifier
                     .background(Color.White)
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
+                    .fillMaxWidth()) {
                 MyTitleDialog(text = "Phone ringtone", modifier = Modifier.padding(24.dp))
                 Divider(Modifier.fillMaxWidth())
-
-                var selected by remember { mutableStateOf("None") }
-
-                OptionItem(selected = selected, onItemSelected = { selected = it })
-
+                var selected by remember {
+                    mutableStateOf("")
+                }
+                OptionItem(selected){selected = it}
                 Divider(Modifier.fillMaxWidth())
-                Row(
-                    Modifier
-                        .align(Alignment.End)
-                        .padding(8.dp)
-                ) {
-                    TextButton(onClick = { onDismiss() }) {
+                Row (Modifier.align(Alignment.End).padding(8.dp)){
+                    TextButton(onClick = { onDismiss()}) {
                         Text(text = "CANCEL")
                     }
-                    TextButton(onClick = {
-                        // Handle the send action here
-                        onDismiss()
-                    }) {
+                    TextButton(onClick = { onDismiss()}) {
                         Text(text = "SEND")
                     }
                 }
@@ -166,20 +161,28 @@ fun MyConfirmationDialog(show: Boolean, onDismiss: () -> Unit) {
 }
 
 @Composable
-fun OptionItem(selected: String, onItemSelected: (String) -> Unit) {
-    Column(Modifier.fillMaxWidth()) {
-        val options = listOf("None", "Callisto", "Ganymede", "Luna")
-        options.forEach { option ->
-            Row(Modifier.padding(6.dp)) {
-                RadioButton(
-                    selected = selected == option,
-                    onClick = { onItemSelected(option) }
-                )
-                Text(text = option)
-            }
+fun OptionItem(name:String, onItemSelected:(String)-> Unit){
+    Column (Modifier.fillMaxWidth()){
+        Row (Modifier.padding(6.dp)){
+            RadioButton(selected = name == "None", onClick = { onItemSelected("None")})
+            Text(text = "None")
         }
+        Row (Modifier.padding(6.dp)){
+            RadioButton(selected = name == "Callisto", onClick = { onItemSelected("Callisto")})
+            Text(text = "Callisto")
+        }
+        Row (Modifier.padding(6.dp)){
+            RadioButton(selected = name == "Ganymede", onClick = { onItemSelected("Ganymede")})
+            Text(text = "Ganymede")
+        }
+        Row (Modifier.padding(6.dp)){
+            RadioButton(selected = name == "Luna", onClick = { onItemSelected("Luna")})
+            Text(text = "Luna")
+        }
+
     }
 }
+
 
 @Composable
 fun MyTitleDialog(text: String, modifier: Modifier = Modifier.padding(bottom = 12.dp)) {
