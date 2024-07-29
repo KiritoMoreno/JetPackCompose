@@ -80,7 +80,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
-import com.example.mynewcompose.ui.theme.MyAlertDialog
+import com.example.mynewcompose.ui.theme.MyCustomDialog
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 import com.example.mynewcompose.ui.theme.MySimpleCustomDialog
 
@@ -99,7 +99,7 @@ class MainActivity : ComponentActivity() {
                         Button(onClick = {show = true }) {
                             Text(text = "Show Dialog")
                         }
-                        MySimpleCustomDialog(show = show, onDismiss = {show = false})
+                        MyCustomDialog(show = show, onDismiss = {show = false})
                     }
                 }
             }
