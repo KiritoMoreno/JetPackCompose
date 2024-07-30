@@ -80,6 +80,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
+import com.example.mynewcompose.ui.theme.LoginScreen
 import com.example.mynewcompose.ui.theme.MyConfirmationDialog
 import com.example.mynewcompose.ui.theme.MyCustomDialog
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
@@ -94,57 +95,15 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var show by remember{ mutableStateOf(false)}
 
-                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Button(onClick = {show = true }) {
-                            Text(text = "Show Dialog")
-                        }
-                        MyConfirmationDialog(show = show, onDismiss = {show = false})
-                    }
+                    LoginScreen()
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun MyCard() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),  // Shadows
-        shape = MaterialTheme.shapes.small,
-        colors = CardDefaults.cardColors(containerColor = Color.Gray, contentColor = Color.Yellow),
-        border = BorderStroke(5.dp, Color.Black)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Example 1")
-            Text(text = "Example 2")
-            Text(text = "Example 3")
-            Text(text = "Example 4")
-
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyBadgeBox() {
-    Column(Modifier.padding(16.dp)) {
-        BadgedBox(badge = {
-            Badge(containerColor = Color.Blue, contentColor = Color.Green) {
-                Text(
-                    text = "100"
-                )
-            }
-        }) {
-            Icon(imageVector = Icons.Default.Star, contentDescription = "Star")
-        }
-    }
-
-}
 
 @Composable
 fun MyDivider() {
