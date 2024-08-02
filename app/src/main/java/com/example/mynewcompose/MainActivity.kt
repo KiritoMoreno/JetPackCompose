@@ -80,11 +80,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.mynewcompose.ui.theme.CheckInfo
+import com.example.mynewcompose.ui.theme.DividerTwi
 import com.example.mynewcompose.ui.theme.LoginScreen
 import com.example.mynewcompose.ui.theme.MyConfirmationDialog
 import com.example.mynewcompose.ui.theme.MyCustomDialog
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 import com.example.mynewcompose.ui.theme.MySimpleCustomDialog
+import com.example.mynewcompose.ui.theme.MyTwitterPost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,12 +94,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyNewComposeTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    color = MaterialTheme.colorScheme.background
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFF161D26))
                 ) {
-
-                    LoginScreen()
-
+                    MyTwitterPost()
+                    DividerTwi()
                 }
             }
         }
