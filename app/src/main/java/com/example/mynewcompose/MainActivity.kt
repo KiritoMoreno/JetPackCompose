@@ -79,6 +79,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mynewcompose.recyclerview.SimpleRecyclerview
 import com.example.mynewcompose.ui.theme.CheckInfo
 import com.example.mynewcompose.ui.theme.DividerTwi
 import com.example.mynewcompose.ui.theme.LoginScreen
@@ -99,8 +100,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
                 ) {
-                    MyTwitterPost()
-                    DividerTwi()
+                    SimpleRecyclerview()
                 }
             }
         }
