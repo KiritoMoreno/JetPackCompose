@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mynewcompose.R
 import com.example.mynewcompose.recyclerview.model.SuperHero
 
+// RecyclerView
 @Composable
 fun SuperHeroView() {
     val context = LocalContext.current
