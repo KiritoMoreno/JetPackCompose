@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.mynewcompose.recyclerview
 
 import android.content.Context
@@ -5,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,6 +55,25 @@ fun SuperHeroView() {
 }
 
 @Composable
+fun SuperHeroStickyView() {
+    val context = LocalContext.current
+    val superhero = getSuperheroes().groupBy { it.publisher }
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+        superhero.forEach { (publisher, mySuperHero)->
+            stickyHeader { Text(text = publisher, modifier = Modifier.fillMaxWidth().background(Color.Green), fontSize = 16.sp,color = Color.White) }
+
+            items(mySuperHero) { superhero ->
+                ItemHero(superhero = superhero) {
+                    Toast.makeText(context, it.superheroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+}
+
+@Composable
 fun SuperHeroWithSpecialControlsView() {
     val context = LocalContext.current
     val rvState = rememberLazyListState()
@@ -85,7 +107,7 @@ fun SuperHeroWithSpecialControlsView() {
 
 
     }
-    
+
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -106,7 +128,7 @@ fun ItemHero(superhero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(
         border = BorderStroke(2.dp, Color.Red),
         modifier = Modifier
-            .width(200.dp)
+            .fillMaxWidth()
             .clickable { onItemSelected(superhero) }
             .padding(vertical = 8.dp, horizontal = 16.dp)) {
         Column {
@@ -145,7 +167,7 @@ fun getSuperheroes(): List<SuperHero> {
         SuperHero("Thor", "Thor Odinson", "Marvel", R.drawable.thor),
         SuperHero("Flash", "Jay Garrick", "DC", R.drawable.flash),
         SuperHero("Green Lantern", "Alan Scott", "DC", R.drawable.green_lantern),
-        SuperHero("Wonder Woman", "Princess Diana", " ", R.drawable.wonder_woman),
+        SuperHero("Wonder Woman", "Princess Diana", "DC", R.drawable.wonder_woman),
         SuperHero("Dare Devil", "dare", "DC", R.drawable.daredevil)
 
         )
