@@ -1,7 +1,9 @@
 package com.example.mynewcompose.recyclerview
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -39,13 +44,26 @@ fun SuperHeroView() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SuperHeroGridView() {
+    val context: Context = LocalContext.current
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        items(getSuperheroes()) { superhero ->
+            ItemHero(superhero = superhero) {
+                Toast.makeText(context, it.superheroName, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
+
 @Composable
 fun ItemHero(superhero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
     Card(
         border = BorderStroke(2.dp, Color.Red),
         modifier = Modifier
             .width(200.dp)
-            .clickable { onItemSelected(superhero) }) {
+            .clickable { onItemSelected(superhero) }.padding(vertical = 8.dp, horizontal = 16.dp)) {
         Column {
             Image(
                 painter = painterResource(id = superhero.photo),
