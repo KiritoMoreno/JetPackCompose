@@ -17,9 +17,15 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mynewcompose.R
 import com.example.mynewcompose.recyclerview.model.SuperHero
+import kotlinx.coroutines.launch
 
 // RecyclerView
 @Composable
@@ -42,6 +49,43 @@ fun SuperHeroView() {
             }
         }
     }
+}
+
+@Composable
+fun SuperHeroWithSpecialControlsView() {
+    val context = LocalContext.current
+    val rvState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()  // for the button
+    Column {
+        LazyColumn(state = rvState, verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.weight(1f)) {
+            items(getSuperheroes()) { superhero ->
+                ItemHero(superhero = superhero) {
+                    Toast.makeText(context, it.superheroName, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // Intermediate state so when it finishes, the button will appear
+        val showbutton by remember{
+            derivedStateOf { rvState.firstVisibleItemIndex > 0
+            }
+        }
+        // This gives us the value depending on the position we are in
+        rvState.firstVisibleItemScrollOffset
+        if (showbutton){
+            Button(onClick = {
+                coroutineScope.launch { rvState.animateScrollToItem(0) }  // When we click, it will take us to the first position
+
+            }, modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)) {
+                Text(text = "Button")
+            }
+        }
+
+
+    }
+    
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -63,7 +107,8 @@ fun ItemHero(superhero: SuperHero, onItemSelected: (SuperHero) -> Unit) {
         border = BorderStroke(2.dp, Color.Red),
         modifier = Modifier
             .width(200.dp)
-            .clickable { onItemSelected(superhero) }.padding(vertical = 8.dp, horizontal = 16.dp)) {
+            .clickable { onItemSelected(superhero) }
+            .padding(vertical = 8.dp, horizontal = 16.dp)) {
         Column {
             Image(
                 painter = painterResource(id = superhero.photo),
