@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mynewcompose.components.ScaffoldExample
 import com.example.mynewcompose.recyclerview.SuperHeroStickyView
 import com.example.mynewcompose.recyclerview.SuperHeroWithSpecialControlsView
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
                 ) {
-                    SuperHeroStickyView()
+                    ScaffoldExample()
                 }
             }
         }
