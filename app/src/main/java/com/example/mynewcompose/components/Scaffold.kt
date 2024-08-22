@@ -5,7 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material.icons.filled.Favorite
@@ -34,13 +38,18 @@ fun ScaffoldExample() {
     var selectedItem by remember { mutableStateOf(0) } // To track the selected item
 
     Scaffold(
-        topBar = { MyTopAppBar { iconLabel ->
-            coroutineScope.launch {
-                snackbarHostState.showSnackbar("You clicked on $iconLabel")
+        topBar = {
+            MyTopAppBar { iconLabel ->
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar("You clicked on $iconLabel")
+                }
             }
-        }},
+        },
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        bottomBar = { MyBottomNavigation(selectedItem){index -> selectedItem = index} }
+        bottomBar = { MyBottomNavigation(selectedItem) { index -> selectedItem = index } },
+        floatingActionButton = { MyFAB() },
+        floatingActionButtonPosition = FabPosition.Center
+
     ) { contentPadding ->
         // Apply the content padding provided by Scaffold
         Box(
@@ -65,15 +74,15 @@ fun MyTopAppBar(onClickIcon: (String) -> Unit) {
             titleContentColor = Color.White
         ),
         navigationIcon = {
-            IconButton(onClick = {onClickIcon("Back")}) {
+            IconButton(onClick = { onClickIcon("Back") }) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
             }
         },
         actions = {
-            IconButton(onClick = {onClickIcon("Search")}) {
+            IconButton(onClick = { onClickIcon("Search") }) {
                 Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
             }
-            IconButton(onClick = {onClickIcon("Dangerous")}) {
+            IconButton(onClick = { onClickIcon("Dangerous") }) {
                 Icon(imageVector = Icons.Filled.Dangerous, contentDescription = "Close")
             }
         }
@@ -82,7 +91,7 @@ fun MyTopAppBar(onClickIcon: (String) -> Unit) {
 
 @Composable
 fun MyBottomNavigation(selectedItem: Int, onItemSelected: (Int) -> Unit) {
-    NavigationBar (containerColor = Color.Red){
+    NavigationBar(containerColor = Color.Red) {
         NavigationBarItem(
             selected = selectedItem == 0,
             onClick = { onItemSelected(0) },
@@ -93,7 +102,7 @@ fun MyBottomNavigation(selectedItem: Int, onItemSelected: (Int) -> Unit) {
                 selectedIconColor = Color.White,
                 unselectedIconColor = Color.Gray
             ),
-            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home")},
+            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") },
             label = { Text(text = "Home") }
         )
         NavigationBarItem(
@@ -119,8 +128,22 @@ fun MyBottomNavigation(selectedItem: Int, onItemSelected: (Int) -> Unit) {
                 selectedIconColor = Color.White,
                 unselectedIconColor = Color.Gray
             ),
-            icon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Person")},
+            icon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Person") },
             label = { Text(text = "Person") }
         )
+    }
+}
+
+@Composable
+fun MyFAB() {
+    Box(modifier = Modifier)
+    FloatingActionButton(
+        onClick = { },
+        containerColor = Color.Yellow,
+        contentColor = Color.Black,
+        shape = CircleShape,
+        modifier = Modifier.size(80.dp).offset(y = 60.dp)
+    ) {
+        Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
     }
 }
