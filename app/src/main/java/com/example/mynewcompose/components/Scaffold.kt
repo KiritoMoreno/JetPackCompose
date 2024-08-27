@@ -1,7 +1,9 @@
 package com.example.mynewcompose.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -36,37 +39,61 @@ fun ScaffoldExample() {
     val coroutineScope = rememberCoroutineScope()
 
     var selectedItem by remember { mutableStateOf(0) } // To track the selected item
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    Scaffold(
-        topBar = {
-            MyTopAppBar { iconLabel ->
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar("You clicked on $iconLabel")
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            MyDrawer { coroutineScope.launch { drawerState.apply { close() } } }
+        }
+    ) {
+        Scaffold(
+            topBar = {
+                MyTopAppBar(
+                    onClickIcon = { iconLabel ->
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar("You clicked on $iconLabel")
+                        }
+                    },
+                    onClickDrawer = {
+                        coroutineScope.launch {
+                            drawerState.apply { if (isClosed) open() else close() }
+                        }
+                    }
+                )
+            },
+            snackbarHost = { SnackbarHost(
+                hostState = snackbarHostState,
+                snackbar = {
+                    Snackbar(
+                        snackbarData = it,
+                        containerColor = Color.LightGray,
+                        contentColor= Color.Blue
+                    )
                 }
-            }
-        },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        bottomBar = { MyBottomNavigation(selectedItem) { index -> selectedItem = index } },
-        floatingActionButton = { MyFAB() },
-        floatingActionButtonPosition = FabPosition.Center
+                ) },
+            bottomBar = { MyBottomNavigation(selectedItem) { index -> selectedItem = index } },
+            floatingActionButton = { MyFAB() }
 
-    ) { contentPadding ->
-        // Apply the content padding provided by Scaffold
-        Box(
-            modifier = Modifier
-                .padding(contentPadding)
-                .fillMaxWidth()
-                .height(200.dp)
-        ) {
-            // Your content goes here
+        ) { contentPadding ->
+            // Apply the content padding provided by Scaffold
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .fillMaxWidth()
+                    .height(200.dp)
+            ) {
+                // Your content goes here
+            }
         }
     }
 }
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopAppBar(onClickIcon: (String) -> Unit) {
+fun MyTopAppBar(onClickIcon: (String) -> Unit, onClickDrawer:() -> Unit) {
     TopAppBar(
         title = { Text(text = "First Toolbar") },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -74,8 +101,8 @@ fun MyTopAppBar(onClickIcon: (String) -> Unit) {
             titleContentColor = Color.White
         ),
         navigationIcon = {
-            IconButton(onClick = { onClickIcon("Back") }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+            IconButton(onClick = { onClickDrawer()}) {
+                Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
             }
         },
         actions = {
@@ -142,8 +169,38 @@ fun MyFAB() {
         containerColor = Color.Yellow,
         contentColor = Color.Black,
         shape = CircleShape,
-        modifier = Modifier.size(80.dp).offset(y = 60.dp)
+        modifier = Modifier
+            .size(80.dp)
+            .offset(y = 60.dp)
     ) {
         Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
+    }
+}
+
+@Composable
+fun MyDrawer(onCloseDrawer: () -> Unit) {
+    Column(Modifier.padding(8.dp)) {
+        Text(text = "First Option", modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { onCloseDrawer() })
+        Text(
+            text = "Second Option",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable { onCloseDrawer() })
+        Text(
+            text = "Third Option",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable { onCloseDrawer() })
+        Text(
+            text = "Fourth Option",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .clickable { onCloseDrawer() })
     }
 }
