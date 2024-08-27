@@ -24,9 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mynewcompose.components.ScaffoldExample
-import com.example.mynewcompose.recyclerview.SuperHeroStickyView
-import com.example.mynewcompose.recyclerview.SuperHeroWithSpecialControlsView
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.mynewcompose.NavigationCompose.Screen1
+import com.example.mynewcompose.NavigationCompose.Screen2
+import com.example.mynewcompose.NavigationCompose.Screen3
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,7 +43,12 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
                 ) {
-                    ScaffoldExample()
+                    val navigationController = rememberNavController()
+                    NavHost(navController = navigationController, startDestination = "screen1"){
+                        composable("screen1"){ Screen1(navigationController)}
+                        composable("screen2"){ Screen2(navigationController)}
+                        composable("screen3"){ Screen3(navigationController)}
+                    }
                 }
             }
         }
