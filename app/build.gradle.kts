@@ -56,6 +56,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
 
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
     //Icons
     implementation("androidx.compose.material:material-icons-extended:1.4.3")
     implementation("androidx.core:core-ktx:1.9.0")

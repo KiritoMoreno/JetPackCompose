@@ -13,6 +13,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyNewComposeTheme {
                 // A surface container using the 'background' color from the theme
-                Column(
+                Surface(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
