@@ -10,24 +10,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.example.mynewcompose.NavigationCompose.Routes.*
 
 @Composable
 fun Screen1(navigationController: NavHostController) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Cyan)){ Text(text = "Screen 1", modifier = Modifier.align(Alignment.Center).clickable { navigationController.navigate("screen2") })}
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Cyan)
+    ) {
+        Text(
+            text = "Screen 1",
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable { navigationController.navigate(Screen2.route) })
+    }
 }
 
 @Composable
-fun Screen2(navigationController: NavHostController){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Green)){ Text(text = "Screen 2", modifier = Modifier.align(Alignment.Center).clickable { navigationController.navigate("screen3") })}
+fun Screen2(navigationController: NavHostController) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Green)
+    ) {
+        Text(
+            text = "Screen 2",
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable { navigationController.navigate(Screen3.route) })
+    }
 }
 
 @Composable
-fun Screen3(navigationController: NavHostController){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Magenta)){ Text(text = "Screen 3", modifier = Modifier.align(Alignment.Center))}
+fun Screen3(navigationController: NavHostController) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Magenta)
+    ) { Text(text = "Screen 3", modifier = Modifier.align(Alignment.Center)) }
 }

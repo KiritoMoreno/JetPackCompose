@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mynewcompose.NavigationCompose.Routes
 import com.example.mynewcompose.NavigationCompose.Screen1
 import com.example.mynewcompose.NavigationCompose.Screen2
 import com.example.mynewcompose.NavigationCompose.Screen3
@@ -44,10 +45,10 @@ class MainActivity : ComponentActivity() {
                         .background(Color(0xFF161D26))
                 ) {
                     val navigationController = rememberNavController()
-                    NavHost(navController = navigationController, startDestination = "screen1"){
-                        composable("screen1"){ Screen1(navigationController)}
-                        composable("screen2"){ Screen2(navigationController)}
-                        composable("screen3"){ Screen3(navigationController)}
+                    NavHost(navController = navigationController, startDestination = Routes.Screen1.route){
+                        composable(Routes.Screen1.route){ Screen1(navigationController)}
+                        composable(Routes.Screen2.route){ Screen2(navigationController)}
+                        composable(Routes.Screen3.route){ Screen3(navigationController)}
                     }
                 }
             }
