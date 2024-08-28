@@ -1,5 +1,6 @@
 package com.example.mynewcompose.NavigationCompose
 
+import android.app.backup.BackupAgent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -52,10 +53,18 @@ fun Screen3(navigationController: NavHostController) {
 }
 
 @Composable
-fun Screen4(navigationController: NavHostController, name: Int) {
+fun Screen4(navigationController: NavHostController, age: Int) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Blue)
-    ) { Text(text = name.toString(), modifier = Modifier.align(Alignment.Center)) }
+    ) { Text(text = age.toString(), modifier = Modifier.align(Alignment.Center).clickable { navigationController.navigate("Screen5") }) }
+}
+@Composable
+fun Screen5(navigationController: NavHostController, name: String?) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Yellow)
+    ) { Text(text = "My name is $name", modifier = Modifier.align(Alignment.Center)) }
 }

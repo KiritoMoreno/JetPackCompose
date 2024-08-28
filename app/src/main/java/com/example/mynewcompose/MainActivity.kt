@@ -34,6 +34,7 @@ import com.example.mynewcompose.NavigationCompose.Screen1
 import com.example.mynewcompose.NavigationCompose.Screen2
 import com.example.mynewcompose.NavigationCompose.Screen3
 import com.example.mynewcompose.NavigationCompose.Screen4
+import com.example.mynewcompose.NavigationCompose.Screen5
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -55,10 +56,16 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Screen1.route) { Screen1(navigationController) }
                         composable(Routes.Screen2.route) { Screen2(navigationController) }
                         composable(Routes.Screen3.route) { Screen3(navigationController) }
-                        composable("Screen4/{name}",arguments = listOf(navArgument("name"){type = NavType.IntType})) { backStackEntry ->
+                        composable("Screen4/{age}",arguments = listOf(navArgument("age"){type = NavType.IntType})) { backStackEntry ->
                             Screen4(
                                 navigationController,
-                                backStackEntry.arguments?.getInt("name") ?: 0
+                                backStackEntry.arguments?.getInt("age") ?: 0
+                            )
+                        }
+                        composable(Routes.Screen5.route, arguments = listOf(navArgument("name", {defaultValue = "Empty"}))) { backStackEntry ->
+                            Screen5(
+                                navigationController,
+                                backStackEntry.arguments?.getString("name")
                             )
                         }
 
