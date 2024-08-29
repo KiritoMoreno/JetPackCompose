@@ -35,6 +35,8 @@ import com.example.mynewcompose.NavigationCompose.Screen2
 import com.example.mynewcompose.NavigationCompose.Screen3
 import com.example.mynewcompose.NavigationCompose.Screen4
 import com.example.mynewcompose.NavigationCompose.Screen5
+import com.example.mynewcompose.instagram.Login.LoginScreen
+import com.example.mynewcompose.instagram.Login.LoginViewModel
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,33 +50,12 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
                 ) {
-                    val navigationController = rememberNavController()
-                    NavHost(
-                        navController = navigationController,
-                        startDestination = Routes.Screen1.route
-                    ) {
-                        composable(Routes.Screen1.route) { Screen1(navigationController) }
-                        composable(Routes.Screen2.route) { Screen2(navigationController) }
-                        composable(Routes.Screen3.route) { Screen3(navigationController) }
-                        composable("Screen4/{age}",arguments = listOf(navArgument("age"){type = NavType.IntType})) { backStackEntry ->
-                            Screen4(
-                                navigationController,
-                                backStackEntry.arguments?.getInt("age") ?: 0
-                            )
-                        }
-                        composable(Routes.Screen5.route, arguments = listOf(navArgument("name", {defaultValue = "Empty"}))) { backStackEntry ->
-                            Screen5(
-                                navigationController,
-                                backStackEntry.arguments?.getString("name")
-                            )
-                        }
-
-                    }
+                    LoginScreen(LoginViewModel())
+                }
                 }
             }
         }
     }
-}
 
 
 @Composable
