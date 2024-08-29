@@ -92,19 +92,15 @@ fun SingUp() {
 @Composable
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
     val email:String by loginViewModel.email.observeAsState(initial = "")
-    var password by rememberSaveable {
-        mutableStateOf("")
-    }
-    var isLoginEnable by rememberSaveable {
-        mutableStateOf(false)
-    }
+    val password:String by loginViewModel.password.observeAsState(initial = "")
+    val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
-        Email(email) { loginViewModel.onLoginChanged(it) }
+        Email(email) { loginViewModel.onLoginChanged(email= it, password=password) }
         Spacer(modifier = Modifier.size(4.dp))
-        Password(password) { password = it }
+        Password(password) { loginViewModel.onLoginChanged(email= email,password = it) }
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
