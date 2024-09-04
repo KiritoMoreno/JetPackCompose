@@ -4,8 +4,10 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mynewcompose.instagram.Login.domain.LoginUseCase
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel: ViewModel()
+    val loginUseCase = LoginUseCase()
 
     private val _email = MutableLiveData<String>()
     val email : LiveData<String> = _email
@@ -20,6 +22,7 @@ class LoginViewModel: ViewModel() {
         _email.value = email
         _password.value = password
         _isLoginEnable.value = enableLogin(email,password)
+        loginUseCase("", "")
     }
 
     fun enableLogin(email:String, password: String)= Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length > 6
