@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,14 +50,27 @@ import com.example.mynewcompose.R
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel) {
+
+
     Box(
         Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        Header(Modifier.align(Alignment.TopEnd))
-        Body(Modifier.align(Alignment.Center),loginViewModel)
-        Footer(Modifier.align(Alignment.BottomCenter))
+        val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
+        if (isLoading){
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .align(Alignment.Center)){
+                CircularProgressIndicator()
+            }
+        }else {
+            Header(Modifier.align(Alignment.TopEnd))
+            Body(Modifier.align(Alignment.Center), loginViewModel)
+            Footer(Modifier.align(Alignment.BottomCenter))
+        }
+
     }
 }
 
@@ -91,20 +105,20 @@ fun SingUp() {
 
 @Composable
 fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
-    val email:String by loginViewModel.email.observeAsState(initial = "")
-    val password:String by loginViewModel.password.observeAsState(initial = "")
+    val email: String by loginViewModel.email.observeAsState(initial = "")
+    val password: String by loginViewModel.password.observeAsState(initial = "")
     val isLoginEnable: Boolean by loginViewModel.isLoginEnable.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(16.dp))
-        Email(email) { loginViewModel.onLoginChanged(email= it, password=password) }
+        Email(email) { loginViewModel.onLoginChanged(email = it, password = password) }
         Spacer(modifier = Modifier.size(4.dp))
-        Password(password) { loginViewModel.onLoginChanged(email= email,password = it) }
+        Password(password) { loginViewModel.onLoginChanged(email = email, password = it) }
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnable)
+        LoginButton(isLoginEnable, loginViewModel)
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
@@ -160,14 +174,19 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnable: Boolean) {
-    Button(onClick = { }, enabled = loginEnable, modifier = Modifier.fillMaxWidth(), colors= ButtonDefaults.buttonColors(
-        containerColor = Color(0xFF78C8F9),
-        disabledContainerColor = Color(0xFF78C8F9),
-        contentColor = Color.White,
-        disabledContentColor = Color.White
+fun LoginButton(loginEnable: Boolean, loginViewModel: LoginViewModel) {
+    Button(
+        onClick = { loginViewModel.onLoginSelected() },
+        enabled = loginEnable,
+        modifier = Modifier.fillMaxWidth(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF78C8F9),
+            disabledContainerColor = Color(0xFF78C8F9),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
 
-    )) {
+        )
+    ) {
         Text(text = "Log In")
     }
 }
@@ -193,7 +212,7 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Password")},
+        placeholder = { Text(text = "Password") },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -205,18 +224,18 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
             unfocusedIndicatorColor = Color.Transparent
         ),
         trailingIcon = {
-            val image = if(passwordVisibility){
+            val image = if (passwordVisibility) {
                 Icons.Filled.VisibilityOff
-            }else{
+            } else {
                 Icons.Filled.Visibility
             }
-            IconButton(onClick = { passwordVisibility = !passwordVisibility}) {
-                Icon(imageVector = image, contentDescription = "Show password" )
+            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                Icon(imageVector = image, contentDescription = "Show password")
             }
         },
-        visualTransformation = if(passwordVisibility){
+        visualTransformation = if (passwordVisibility) {
             VisualTransformation.None
-        }else{
+        } else {
             PasswordVisualTransformation()
         }
     )
@@ -238,7 +257,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         value = email,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Email")}, // this it will work as a hint
+        placeholder = { Text(text = "Email") }, // this it will work as a hint
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
