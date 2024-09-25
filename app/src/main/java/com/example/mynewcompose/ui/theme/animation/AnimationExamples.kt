@@ -1,6 +1,7 @@
 package com.example.mynewcompose.ui.theme.animation
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,6 +39,23 @@ fun ColorAnimationSimple(){
                 .background(realColor)
                 .clickable { firstColor = !firstColor })
         }
+
+    }
+
+}
+@Composable
+fun SizeAnimation(){
+    Column (){
+        var smallSize by rememberSaveable {
+            mutableStateOf(true)
+        }
+        val size by animateDpAsState(targetValue = if(smallSize) 50.dp else 100.dp)
+        Box(modifier = Modifier
+            .size(size)
+            .background(Color.Cyan)
+            .clickable { smallSize = !smallSize })
+
+
     }
 
 }

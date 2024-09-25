@@ -37,6 +37,7 @@ import com.example.mynewcompose.instagram.Login.LoginScreen
 import com.example.mynewcompose.instagram.Login.LoginViewModel
 import com.example.mynewcompose.ui.theme.MyNewComposeTheme
 import com.example.mynewcompose.ui.theme.animation.ColorAnimationSimple
+import com.example.mynewcompose.ui.theme.animation.SizeAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .background(Color(0xFF161D26))
                 ) {
-                    ColorAnimationSimple()
+                    SizeAnimation()
                 }
                 }
             }
